@@ -27,6 +27,15 @@ describe('backend-express-template routes', () => {
     const eckhartTolle = res.body.find((char) => char.id === '1');
     expect(eckhartTolle).toHaveProperty('name', 'Eckhart Tolle');
   });
+  it('GET /authors/:id should return the author detail', async () => {
+    const res = await request(app).get('/authors/1');
+    expect(res.body).toEqual({
+      id: '1',
+      name: 'Eckhart Tolle',
+      dob: '1948-02-16T08:00:00.000Z',
+      pob: 'Lünen, Germany',
+    });
+  });
 
   afterAll(() => {
     pool.end();
