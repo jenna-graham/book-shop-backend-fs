@@ -9,7 +9,7 @@ describe('backend-express-template routes', () => {
   });
   it('GET /books should return a list of books', async () => {
     const res = await request(app).get('/books');
-    expect(res.body.length).toEqual(9);
+    expect(res.body.length).toEqual(7);
     const aNewEarth = res.body.find((char) => char.id === '1');
     expect(aNewEarth).toHaveProperty('title', 'A New Earth');
   });
@@ -20,6 +20,12 @@ describe('backend-express-template routes', () => {
       title: 'A New Earth',
       released: 2005,
     });
+  });
+  it('GET /authors should return a list of authors', async () => {
+    const res = await request(app).get('/authors');
+    expect(res.body.length).toEqual(9);
+    const eckhartTolle = res.body.find((char) => char.id === '1');
+    expect(eckhartTolle).toHaveProperty('name', 'Eckhart Tolle');
   });
 
   afterAll(() => {
