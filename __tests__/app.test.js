@@ -10,10 +10,9 @@ describe('backend-express-template routes', () => {
   it('GET /books should return a list of books', async () => {
     const res = await request(app).get('/books');
     expect(res.body.length.toEqual(9));
-    expect(res.body[0]).toEqual({
-      id: expect.any(String),
-      title: expect.any(String),
-    });
+    const aNewEarth = res.body.find((char) => char.id === '1');
+    expect(aNewEarth).toHaveProperty('title', 'A New Earth');
+    expect(aNewEarth).toHaveProperty('released', '2005');
   });
   afterAll(() => {
     pool.end();
