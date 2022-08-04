@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const Book = require('../lib/models/Book');
+const Author = require('../lib/models/Author');
 
 describe('backend-express-template routes', () => {
   beforeEach(() => {
@@ -37,6 +38,7 @@ describe('backend-express-template routes', () => {
       pob: 'Lünen, Germany',
     });
   });
+
   it('should add a new book', async () => {
     const book = new Book({
       book_id: '8',
@@ -45,6 +47,16 @@ describe('backend-express-template routes', () => {
     const res = await request(app).post('/owners_books').send(book);
     expect(res.body.author_id).toEqual(book.author_id);
     expect(res.body.book_id).toEqual(book.book_id);
+  });
+
+  it('should add a new author', async () => {
+    const author = new Author({
+      book_id: '8',
+      author_id: '10',
+    });
+    const res = await request(app).post('/owners_author').send(author);
+    expect(res.body.author_id).toEqual(author.author_id);
+    expect(res.body.book_id).toEqual(author.book_id);
   });
 
   afterAll(() => {
