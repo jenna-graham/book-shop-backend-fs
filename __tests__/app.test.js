@@ -42,22 +42,25 @@ describe('backend-express-template routes', () => {
 
   it('should add a new book', async () => {
     const book = new Book({
-      book_id: '8',
-      author_id: '10',
+      title: 'Life of Jenna',
+      released: 2022,
     });
-    const res = await request(app).post('/owners_books').send(book);
-    expect(res.body.author_id).toEqual(book.author_id);
-    expect(res.body.book_id).toEqual(book.book_id);
+    const res = await request(app).post('/books').send(book);
+    expect(res.body.title).toEqual(book.title);
+    expect(res.body.released).toEqual(book.released);
   });
 
-  it.skip('should add a new author', async () => {
+  it('should add a new author', async () => {
     const author = new Author({
-      book_id: '8',
-      author_id: '10',
+      name: 'Jenna Graham',
+      dob: '1/02/1985',
+      pob: 'Eugene OR',
     });
-    const res = await request(app).post('/owners_author').send(author);
-    expect(res.body.author_id).toEqual(author.author_id);
-    expect(res.body.book_id).toEqual(author.book_id);
+    const res = await request(app).post('/authors').send(author);
+    console.log(res.body);
+    expect(res.body.name).toEqual(author.name);
+    expect(res.body.dob).toEqual(author.dob);
+    expect(res.body.pob).toEqual(author.pob);
   });
 
   afterAll(() => {
