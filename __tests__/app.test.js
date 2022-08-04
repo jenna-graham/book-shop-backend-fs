@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const Book = require('../lib/models/Book');
 
 describe('backend-express-template routes', () => {
   beforeEach(() => {
@@ -35,6 +36,15 @@ describe('backend-express-template routes', () => {
       dob: '1948-02-16T08:00:00.000Z',
       pob: 'Lünen, Germany',
     });
+  });
+  it('should add a new book', async () => {
+    const book = new Book({
+      book_id: '8',
+      author_id: '10',
+    });
+    const res = await request(app).post('/owners_books').send(book);
+    expect(res.body.author_id).toEqual(book.author_id);
+    expect(res.body.book_id).toEqual(book.book_id);
   });
 
   afterAll(() => {
