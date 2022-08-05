@@ -15,12 +15,14 @@ describe('backend-express-template routes', () => {
     const aNewEarth = res.body.find((char) => char.id === '1');
     expect(aNewEarth).toHaveProperty('title', 'A New Earth');
   });
+
   it('GET /books/:id should return the book detail', async () => {
     const res = await request(app).get('/books/1');
     expect(res.body).toEqual({
       id: '1',
       title: 'A New Earth',
       released: 2005,
+      authors: expect.any(Array),
     });
   });
   it('GET /authors should return a list of authors', async () => {
@@ -37,6 +39,7 @@ describe('backend-express-template routes', () => {
       name: 'Eckhart Tolle',
       dob: '2/16/1948',
       pob: 'Lünen, Germany',
+      books: expect.any(Array),
     });
   });
 
@@ -57,7 +60,6 @@ describe('backend-express-template routes', () => {
       pob: 'Eugene OR',
     });
     const res = await request(app).post('/authors').send(author);
-    console.log(res.body);
     expect(res.body.name).toEqual(author.name);
     expect(res.body.dob).toEqual(author.dob);
     expect(res.body.pob).toEqual(author.pob);
